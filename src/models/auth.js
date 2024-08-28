@@ -1,32 +1,33 @@
-const connection = require('./db');
+const db = require("./db");
 
-function getUserById(id, callback) {
-  const query = 'SELECT * FROM usuarios WHERE id = ?';
-  connection.query(query, [id], (error, results) => {
-    if (error) {
-      callback(error);
-    } else if (results.length === 0) {
-      callback(null, null);
-    } else {
-      callback(null, results[0]);
-    }
-  });
-}
-//login
-function login(email, password, callback) {
-  const query = 'SELECT * FROM usuarios WHERE login = ? AND password = ?';
-  connection.query(query, [email, password], (error, results) => {
-    if (error) {
-      callback(error);
-    } else if (results.length === 0) {
-      callback(null, null);
-    } else {
-      callback(null, results[0]);
-    }
-  });
-}
+const User = {
+  login: (user, password, callback) => {
+    const query = `
+      SELECT 
+          id, 
+          nombres, 
+          apellidos, 
+          tipousuarios, 
+          ci, 
+          edad, 
+          \`user\`
+      FROM 
+          sadm6.usuarios
+      WHERE 
+          \`user\` = '${user}' AND password = '${password}';
+    `;
 
-module.exports = {
-  getUserById,
-  login
+    db.query(query, (err, results) => {
+      if (err) {
+        return callback(err, null);
+      }
+      if (results.length === 0) {
+        return callback(null, null);
+      }
+      return callback(null, results[0]);
+    });
+    
+  },
 };
+
+module.exports = User;

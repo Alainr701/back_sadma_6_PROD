@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const router = Router();
-const auth = require('../models/auth');
+const authController = require('../controllers/auth');
 
 router.get('/', (req, res) => {
   res.send('Hello World!');
@@ -20,19 +20,6 @@ router.get('/usuarios/:id', (req, res) => {
   });
 });
 //login
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  auth.login(email, password, (error, user) => {
-    if (error) {
-      res.status(500).json({ error: 'Error logging in',status: false });
-    } else if (!user) {
-      res.status(401).json({ error: 'Invalid email or password',status: false });
-    } else {
-      res.json({ user, status: true });
-    }
-  });
-});
-
-
+router.post('/login', authController.login);
 
 module.exports = router;
