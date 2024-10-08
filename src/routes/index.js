@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const router = Router();
-const authController = require('../controllers/auth');
+const authController = require('../controllers/auth_controller');
+const correspondenciaController = require('../controllers/correspondencia_controller.JS');
 
 router.get('/', (req, res) => {
   res.send('Hello World!');
@@ -19,6 +20,9 @@ router.get('/usuarios/:id', (req, res) => {
     }
   });
 });
+//CORRRESPONDENCIA
+router.post('/correspondencias', correspondenciaController.guardar);
+
 //login
 router.post('/login', authController.login);
 
