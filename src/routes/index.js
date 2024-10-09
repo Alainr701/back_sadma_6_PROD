@@ -21,7 +21,8 @@ router.get('/usuarios/:id', (req, res) => {
   });
 });
 //CORRRESPONDENCIA
-router.post('/correspondencias', correspondenciaController.guardar);
+router.post('/correspondencias_guardar', correspondenciaController.guardar);
+router.get('/correspondencias_obtener/:usuario', correspondenciaController.obtener);
 
 //login
 router.post('/login', authController.login);

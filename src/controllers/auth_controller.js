@@ -19,7 +19,7 @@ const authController = {
       return res.status(200).json(
         { 
           status: true,
-          msg: 'Login exitoso', 
+          message: 'Login exitoso', 
           data: user 
         }
       );

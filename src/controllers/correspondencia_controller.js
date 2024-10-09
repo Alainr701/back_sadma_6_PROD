@@ -1,27 +1,36 @@
 const Correspondencia = require('../models/correspondencia');
 const correspondenciaController = {
+    guardar: async (req, res) => {
+        try {
+            const body  = req.body;
+            // Usar await para esperar a que Correspondencia.crear retorne el resultado
+            const data = await Correspondencia.crear(body);
 
-    guardar: (req, res) => {
-        const {referencia, ...data} = req.body;
+            res.json({
+                status: true,
+                data,
+                message: 'Correspondencia guardada correctamente',
+            }); 
+        } catch (err) {
+            res.status(500).json({ message: 'Error al guardar la correspondencia', error: err });
+        }
+    },
 
-        Correspondencia.crear(data, (err, result) => {
-            if (err) {
-                return res.status(500).json({ 
-                    status: false,
-                    message: 'Error en el servidor',
-                    data:  null
+    obtener: async (req, res) => {
+        const usu_cre = req.params.usuario;
+        try {
+            const data = await Correspondencia.obtener(usu_cre);
+            res.json(
+                {
+                status: true,
+                data,
+                message: 'Correspondencias obtenidas correctamente',
                 });
-            }
-            return res.status(200).json(
-                { 
-                    status: true,
-                    msg: 'Guardado exitoso', 
-                    data: result 
-                }
-            );
-        });
-       
-    }
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener las correspondencias', error: err });
+        }
+    }   
+
 }
 
 module.exports = correspondenciaController;
