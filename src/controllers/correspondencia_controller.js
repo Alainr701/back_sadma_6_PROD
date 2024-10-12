@@ -29,7 +29,22 @@ const correspondenciaController = {
         } catch (err) {
             res.status(500).json({ message: 'Error al obtener las correspondencias', error: err });
         }
-    }   
+    }  ,
+
+
+    sabeDoc: async (req, res) => {
+        try {
+            const body  = req.body;
+          
+            const data = await Correspondencia.crearDoc(body);
+            res.json({
+                status: true,
+                data,
+                message: 'Correspondencia guardada correctamente',
+            }); 
+        } catch (err) {
+        } 
+    } 
 
 }
 
