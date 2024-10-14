@@ -44,7 +44,21 @@ const correspondenciaController = {
             }); 
         } catch (err) {
         } 
-    } 
+    } ,
+    obtenerTodo: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.obtenerTodo(body);
+            res.json(
+                {
+                status: true,
+                data,
+                message: 'Correspondencias obtenidas correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener las correspondencias', error: err });
+        }
+    }  ,
 
 }
 

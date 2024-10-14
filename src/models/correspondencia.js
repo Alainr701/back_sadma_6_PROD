@@ -90,6 +90,25 @@ const Correspondencia = {
       console.error("Error al ejecutar la consulta:", error);
     }
   },
+
+  obtenerTodo: async (body) => {
+    try {
+      const sql = `select * from hoja_de_ruta where id_personas = ${body.id_personas} and estado = '${body.estado}'`;
+      const result = await new Promise((resolve, reject) => {
+        db.query(sql, (err, result) => {
+          if (err) {
+            console.log(err);
+            return reject(err);
+          }
+          resolve(result);
+        });
+      });
+      return result;
+    } catch (error) {
+      console.error("Error al ejecutar la consulta:", error);
+      return null;
+    }
+  },
   crearDoc:  async (data) => {
     try {
 
