@@ -147,6 +147,66 @@ const Correspondencia = {
     }  
     return indice;
   },
+  // select * from personas p
+  obtenerPersonas: async () => {
+    try {
+      const sql = `select *,u.nombre from personas p
+      inner join unidad u 
+      on p.id_personas = u.id_unidad;`;
+      const result = await new Promise((resolve, reject) => {
+        db.query(sql, (err, result) => {
+          if (err) {
+            console.log(err);
+            return reject(err);
+          }
+          resolve(result);
+        });
+      });
+      return result;
+    } catch (error) {
+      console.error("Error al ejecutar la consulta:", error);
+    }
+  },
+    //optener documento por id 
+    // SELECT id, id_hoja_de_ruta, doc64, tipo_documento, fec_cre
+// FROM sadm6.documentos;
+  obtenerDoc: async (id) => {
+    try {
+      const sql = `select * from documentos where id_hoja_de_ruta = ${id} order by id desc limit 1`;
+      const result = await new Promise((resolve, reject) => {
+        db.query(sql, (err, result) => {
+          if (err) {
+            console.log(err);
+            return reject(err);
+          }
+          resolve(result);
+        });
+      });
+      return result[0];
+    } catch (error) {
+      console.error("Error al ejecutar la consulta:", error);
+    }
+      
+  },
+  //DERIVACIONES
+  crearDerivacion: async (data) => {
+    const sql=`INSERT INTO sadm6.historial_derivaciones
+              (id_personas, id_hoja_de_ruta, fecha_derivacion, obs, fec_cre, plazo_dias,  proveido,estado )
+              VALUES(${data.id_personas}, ${data.id_hoja_de_ruta}, current_timestamp(), '${data.observacion}', current_timestamp(), ${data.plazo_dias}, '${data.proveido}', '${data.estado}');`;
+
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result['insertId'];
+  }
+
+  
 };
 
 module.exports = Correspondencia;
@@ -159,7 +219,7 @@ module.exports = Correspondencia;
 // db.query(ultimoIdQuery, (err, result) => {
 //     if (err) {
 //         console.log(err);
-//     } else {
+//     } el
 //         console.log(result[0].ultimo_id??0);
 //         indice = parseInt(result[0].ultimo_id) + 1;
 //     }

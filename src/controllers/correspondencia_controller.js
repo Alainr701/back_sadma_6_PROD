@@ -59,6 +59,52 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al obtener las correspondencias', error: err });
         }
     }  ,
+    obtenerPersonas: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.obtenerPersonas(body);
+            res.json(
+                {
+                status: true,
+                data,
+                message: 'Correspondencias obtenidas correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener las correspondencias', error: err });
+        }
+    },
+  
+
+    obtenerDoc: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.obtenerDoc(body.id_hoja_de_ruta);
+            res.json(
+                {
+                status: true,
+                data,
+                message: 'Correspondencias obtenidas correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener las correspondencias', error: err });
+        }
+    },
+
+    // derivaciones
+    crearDerivacion: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.crearDerivacion(body);
+            res.json(
+                {
+                status: true,
+                data,
+                message: 'Derivacion guardada correctamente en el historial',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al guardar la correspondencia', error: err });
+        }
+    }
 
 }
 

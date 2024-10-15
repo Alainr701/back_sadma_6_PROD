@@ -27,8 +27,18 @@ router.get('/correspondencias_obtener/:usuario', correspondenciaController.obten
 //SABE DOCUEMENS
 
 router.post('/correspondencias_sabeDoc', correspondenciaController.sabeDoc);
+router.post('/obtenerDoc', correspondenciaController.obtenerDoc);
 
 //login
 router.post('/login', authController.login);
+
+
+//personas
+router.get('/obtenerPersonasUnidad', correspondenciaController.obtenerPersonas);
+
+//derivaciones
+router.post('/crearDerivacion', correspondenciaController.crearDerivacion);
+
+
 
 module.exports = router;
