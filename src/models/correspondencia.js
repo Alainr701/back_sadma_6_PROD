@@ -93,7 +93,7 @@ const Correspondencia = {
 
   obtenerTodo: async (body) => {
     try {
-      const sql = `select * from hoja_de_ruta where id_personas = ${body.id_personas} and estado = '${body.estado}'`;
+      const sql = `select * from hoja_de_ruta where id_personas = ${body.id_personas} and estado = '${body.estado}' order by id_hoja_de_ruta desc`;
       const result = await new Promise((resolve, reject) => {
         db.query(sql, (err, result) => {
           if (err) {
@@ -191,9 +191,9 @@ const Correspondencia = {
   //DERIVACIONES
   crearDerivacion: async (data) => {
     const sql=`INSERT INTO sadm6.historial_derivaciones
-              (id_personas, id_hoja_de_ruta, fecha_derivacion, obs, fec_cre, plazo_dias,  proveido,estado )
-              VALUES(${data.id_personas}, ${data.id_hoja_de_ruta}, current_timestamp(), '${data.observacion}', current_timestamp(), ${data.plazo_dias}, '${data.proveido}', '${data.estado}');`;
-
+              (id_personas, id_hoja_de_ruta, fecha_derivacion, obs, fec_cre, plazo_dias,  proveido,estado,id_proveido_personas )
+              VALUES(${data.id_personas}, ${data.id_hoja_de_ruta}, current_timestamp(), '${data.observacion}', current_timestamp(), ${data.plazo_dias}, '${data.proveido}', '${data.estado}', ${data.id_proveido_personas});`;
+ 
     const result = await new Promise((resolve, reject) => {
       db.query(sql, (err, result) => {
         if (err) {
@@ -204,10 +204,35 @@ const Correspondencia = {
       });
     });
     return result['insertId'];
-  }
-
+  },
+  guardarDerivacionHojaDeRuta: async (data) => {
+    
+    const sql2=`
+    UPDATE sadm6.hoja_de_ruta
+    SET 
+      estado = '${data.estado}',
+      id_personas = ${data.id_personas},
+      fec_mod = current_timestamp(),
+      id_proveido_personas = ${data.id_proveido_personas},
+      usu_mod = '${data.usu_mod}'
+      WHERE id_hoja_de_ruta = ${data.id_hoja_de_ruta}; 
+      `;
+      // usu_mod = ${data.usu_mod}
+    const result2 = await new Promise((resolve, reject) => {
+      db.query(sql2, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result2;
+  }  
   
 };
+
+
 
 module.exports = Correspondencia;
 

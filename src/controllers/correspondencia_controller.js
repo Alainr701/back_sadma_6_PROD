@@ -15,6 +15,29 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al guardar la correspondencia', error: err });
         }
     },
+    guardarDerivacionHojaDeRuta: async (req, res) => {
+        try {
+            const body  = req.body;
+            console.log("---4585s");
+            console.log(req.body);
+            
+            // const dataDerivacion = await Correspondencia.crearDerivacion(body);
+            // console.log("---4585");
+            // console.log(dataDerivacion);
+            
+
+            const data = await Correspondencia.guardarDerivacionHojaDeRuta(body);
+            console.log("---***");
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Derivacion guardada correctamente en el historial',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al guardar la correspondencia', error: err });
+        }
+    },
 
     obtener: async (req, res) => {
         const usu_cre = req.params.usuario;
@@ -97,14 +120,15 @@ const correspondenciaController = {
             const data = await Correspondencia.crearDerivacion(body);
             res.json(
                 {
-                status: true,
-                data,
-                message: 'Derivacion guardada correctamente en el historial',
+                    status: true,
+                    data,
+                    message: 'Derivacion guardada correctamente en el historial',
                 });
         } catch (err) {
             res.status(500).json({ message: 'Error al guardar la correspondencia', error: err });
         }
-    }
+    },
+
 
 }
 

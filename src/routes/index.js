@@ -23,6 +23,7 @@ router.get('/usuarios/:id', (req, res) => {
 //CORRRESPONDENCIA
 router.post('/obtenerCorrespondencia', correspondenciaController.obtenerTodo);
 router.post('/correspondencias_guardar', correspondenciaController.guardar);
+router.post('/guardarDerivacionHojaDeRuta', correspondenciaController.guardarDerivacionHojaDeRuta);
 router.get('/correspondencias_obtener/:usuario', correspondenciaController.obtener);
 //SABE DOCUEMENS
 
