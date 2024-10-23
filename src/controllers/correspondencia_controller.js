@@ -21,9 +21,9 @@ const correspondenciaController = {
             console.log("---4585s");
             console.log(req.body);
             
-            // const dataDerivacion = await Correspondencia.crearDerivacion(body);
-            // console.log("---4585");
-            // console.log(dataDerivacion);
+            const dataDerivacion = await Correspondencia.crearDerivacion(body);
+            console.log("---4585");
+            console.log(dataDerivacion);
             
 
             const data = await Correspondencia.guardarDerivacionHojaDeRuta(body);
