@@ -206,14 +206,6 @@ const Correspondencia = {
     return result['insertId'];
   },
   
-  
-// UPDATE sadm6.hoja_de_ruta
-// set usu_mod='alain.espino', estado = 'DERIVADO'
-// WHERE id_hoja_de_ruta=119;
-  cambiarEstadoDerivadoByIdHojaRuta: async (data) =>{
-    const sql = ''
-
-  }
   guardarDerivacionHojaDeRuta: async (data) => {
     
     const sql2=`
