@@ -1,7 +1,8 @@
 const {Router} = require('express');
 const router = Router();
 const authController = require('../controllers/auth_controller');
-const correspondenciaController = require('../controllers/correspondencia_controller.JS');
+const newLocal = '../controllers/correspondencia_controller.js';
+const correspondenciaController = require(newLocal);
 
 router.get('/', (req, res) => {
   res.send('Hello World!');
@@ -22,6 +23,7 @@ router.get('/usuarios/:id', (req, res) => {
 });
 //CORRRESPONDENCIA
 router.post('/obtenerCorrespondencia', correspondenciaController.obtenerTodo);
+router.post('/obtenerUnaCorrespondencia', correspondenciaController.obtenerUnaCorrespondencia);
 router.post('/correspondencias_guardar', correspondenciaController.guardar);
 router.post('/guardarDerivacionHojaDeRuta', correspondenciaController.guardarDerivacionHojaDeRuta);
 router.get('/correspondencias_obtener/:usuario', correspondenciaController.obtener);
@@ -39,7 +41,32 @@ router.get('/obtenerPersonasUnidad', correspondenciaController.obtenerPersonas);
 
 //derivaciones
 router.post('/crearDerivacion', correspondenciaController.crearDerivacion);
+router.post('/editarDerivacion', correspondenciaController.editarDerivacion);
+router.post('/aceptarDerivacion', correspondenciaController.aceptarDerivacion);
+router.post('/rechazarDerivacion', correspondenciaController.rechazarDerivacion);
+router.post('/concluidoGamea', correspondenciaController.concluidoGamea);
+router.post('/concluirDerivacion', correspondenciaController.concluirDerivacion);
 
+router.post('/obtenerHistorialDeDerivaciones', correspondenciaController.obtenerHistorialDeDerivaciones);
+
+router.post('/obtenerHistorialData', correspondenciaController.obtenerHistorialData);
+
+
+
+//CREADO   //
+//DERIVADO
+//ACEPTADO
+//ACEPTADO_DES
+//REMITIDO
+//REMITIDO_DES 
+//CONCLUIDO
+//FINALIZADO //
+
+
+// obtenerTodaLaHistorialDeDerivaciones
+router.post('/getHistorial', correspondenciaController.obtenerTodaLaHistorialDeDerivaciones);
+
+router.post('/buscarPersona', correspondenciaController.buscarPersona);
 
 
 module.exports = router;
