@@ -287,6 +287,20 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al obtener las derivaciones', error: err });
         }
     },
+    obternerCodigoInterno: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.obternerCodigoInterno(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Derivaciones obtenidas correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener las derivaciones', error: err });
+        }
+    },
 
 
 

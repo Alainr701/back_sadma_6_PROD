@@ -569,6 +569,24 @@ sabeDoc:  async (data) => {
       });
     });
     return result;
+   },
+   async obternerCodigoInterno(data){
+    const sql = `
+    SELECT 
+      hr.codigo_interno
+    FROM hoja_de_ruta hr
+    WHERE hr.id_hoja_de_ruta = ${data.id_hoja_de_ruta}
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
    }
 
   

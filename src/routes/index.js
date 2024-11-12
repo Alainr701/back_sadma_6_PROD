@@ -51,6 +51,8 @@ router.post('/obtenerHistorialDeDerivaciones', correspondenciaController.obtener
 
 router.post('/obtenerHistorialData', correspondenciaController.obtenerHistorialData);
 
+router.post('/obternerCodigoInterno', correspondenciaController.obternerCodigoInterno);
+
 
 
 //CREADO   //
