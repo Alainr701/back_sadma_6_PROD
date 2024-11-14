@@ -301,8 +301,106 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al obtener las derivaciones', error: err });
         }
     },
-
-
+    // select id_roles,nombre from sadm6.roles r;
+// select id_cargos,nombre from sadm6.cargos u;
+// select id_unidad,nombre from sadm6.unidad u ;
+    obtenerRoles: async (req, res) => {
+        try {
+            const data = await Correspondencia.obtenerRoles();
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Roles obtenidos correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener los roles', error: err });
+        }
+    },
+    obtenerCargos: async (req, res) => {
+        try {
+            const data = await Correspondencia.obtenerCargos();
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Cargos obtenidos correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener los cargos', error: err });
+        }
+    },
+    obtenerUnidades: async (req, res) => {
+        try {
+            const data = await Correspondencia.obtenerUnidades();
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Unidades obtenidos correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener las unidades', error: err });
+        }
+    },
+    obtenerCargos: async (req, res) => {
+        try {
+            const data = await Correspondencia.obtenerCargos();
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Cargos obtenidos correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al obtener los cargos', error: err });
+        }
+    },
+    //personas
+    agregarPersona: async (req,res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.agregarPersona(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Persona agregada correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al agregar la persona', error: err });
+        }
+        
+    },
+    agregarUsuarios: async (req,res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.agregarUsuarios(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Usuario agregado correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al agregar el usuario', error: err });
+        }
+        
+    },
+    consultarPersonas: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.consultarPersonas();
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Personas consultadas correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al consultar las personas', error: err });
+        }
+    },
 
 }
 

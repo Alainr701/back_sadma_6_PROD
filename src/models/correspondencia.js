@@ -36,7 +36,7 @@ const Correspondencia = {
              tipoDocumento,
              categoria,
              estado,
-             usu_cre,
+             usu_cre,agregarPersona
              id_personas
              )
             VALUES
@@ -570,12 +570,11 @@ sabeDoc:  async (data) => {
     });
     return result;
    },
-   async obternerCodigoInterno(data){
+   
+
+   obtenerRoles: async () => {
     const sql = `
-    SELECT 
-      hr.codigo_interno
-    FROM hoja_de_ruta hr
-    WHERE hr.id_hoja_de_ruta = ${data.id_hoja_de_ruta}
+    select id_roles,nombre from sadm6.roles r;
     `;
     const result = await new Promise((resolve, reject) => {
       db.query(sql, (err, result) => {
@@ -588,7 +587,123 @@ sabeDoc:  async (data) => {
     });
     return result;
    }
+   ,
+   obtenerCargos: async () => {
+    const sql = `
+    select id_cargos,nombre from sadm6.cargos u;
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+   },
+   obtenerUnidades: async () => {
+    const sql = `
+    select id_unidad,nombre from sadm6.unidad u ;
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+   },
 
+
+
+agregarPersona:async (params) => {
+  try {
+    const  sql = `
+    INSERT INTO personas (nombres, apellidos, roles, ci, edad, celular, fec_cre, fec_mod, usu_cre, usu_mod, id_roles, id_cargos, id_unidad)
+    VALUES (
+      '${params.nombres}',
+      '${params.apellidos}',
+      '${params.roles}',
+      '${params.ci}',
+      ${params.edad},
+      '${params.celular}',
+      current_timestamp(),
+      current_timestamp(),
+      '${params.usu_cre}',
+      '${params.usu_mod}',
+      ${params.id_roles},
+      ${params.id_cargos},
+      ${params.id_unidad}
+    );
+    `;
+     const result = await new Promise((resolve,reject)=>{
+      db.query(sql,(err,result)=>{
+        if(err){
+          console.log(err);
+          return reject(err);
+        }
+        
+        resolve(result.insertId);
+      })
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+agregarUsuarios: async (params) => {
+
+  try {
+    const sql= `
+    INSERT INTO sadm6.usuarios (usuario, password, id_personas,estado) VALUES('${params.usuario}', '${params.password}', ${params.id_personas},TRUE);
+    `;
+    const result = await new Promise((resolve,reject)=>{
+      db.query(sql,(err,result)=>{
+        if(err){
+          console.log(err);
+          return reject(err);
+        }
+        
+        resolve(result.insertId);
+      })
+    });
+    return result;
+
+
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+consultarPersonas: async () => {
+  try {
+    const sql = `select 
+                  u.estado,u.usuario,
+                   p.*
+                  from usuarios u  
+                  inner join personas p 
+                  on p.id_personas = u.id_personas ;
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+},
   
 };
 

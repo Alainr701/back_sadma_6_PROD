@@ -54,6 +54,11 @@ router.post('/obtenerHistorialData', correspondenciaController.obtenerHistorialD
 router.post('/obternerCodigoInterno', correspondenciaController.obternerCodigoInterno);
 
 
+//obetener datos
+
+router.get('/obtenerRoles', correspondenciaController.obtenerRoles);
+router.get('/obtenerCargos', correspondenciaController.obtenerCargos);
+router.get('/obtenerUnidades', correspondenciaController.obtenerUnidades);
 
 //CREADO   //
 //DERIVADO
@@ -69,6 +74,11 @@ router.post('/obternerCodigoInterno', correspondenciaController.obternerCodigoIn
 router.post('/getHistorial', correspondenciaController.obtenerTodaLaHistorialDeDerivaciones);
 
 router.post('/buscarPersona', correspondenciaController.buscarPersona);
+
+router.post('/agregarPersonas', correspondenciaController.agregarPersona);
+
+router.post('/agregarUsuarios', correspondenciaController.agregarUsuarios);
+router.get('/consultarPersonas', correspondenciaController.consultarPersonas);
 
 
 module.exports = router;
