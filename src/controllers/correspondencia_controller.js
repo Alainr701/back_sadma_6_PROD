@@ -143,6 +143,22 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al guardar la correspondencia', error: err });
         }
     },
+    
+    aceptarDerivacionHistorial: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.aceptarDerivacionHistorial(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Derivacion aceptada correctamente en el historial',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al aceptar la derivacion en el historial', error: err });
+        }
+    },
+    
     editarDerivacion: async (req, res) => {
         try {
             const body  = req.body;
@@ -189,6 +205,8 @@ const correspondenciaController = {
     rechazarDerivacion: async (req, res) => {
         try {
             const body  = req.body;
+            console.log(body);
+            
             const data = await Correspondencia.rechazarDerivacion(body);
             res.json(
                 {
@@ -401,7 +419,50 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al consultar las personas', error: err });
         }
     },
-
+    actualizarEstadoUsuario: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.actualizarEstadoUsuario(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Persona actualizada correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al actualizar la persona', error: err });
+        }
+    },
+    actualizarPersona: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.actualizarPersona(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Persona actualizada correctamente',
+                });
+                
+        } catch (err) {
+            res.status(500).json({ message: 'Error al actualizar la persona', error: err });
+        }
+    },
+    actualizarUsuarios: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.actualizarUsuarios(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Usuario actualizado correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al actualizar el usuario', error: err });
+        }
+    },
+    
 }
 
 module.exports = correspondenciaController;

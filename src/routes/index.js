@@ -80,5 +80,12 @@ router.post('/agregarPersonas', correspondenciaController.agregarPersona);
 router.post('/agregarUsuarios', correspondenciaController.agregarUsuarios);
 router.get('/consultarPersonas', correspondenciaController.consultarPersonas);
 
+//ACTUALIZAR ESTADO USUARIO
+router.post('/actualizarEstadoUsuario', correspondenciaController.actualizarEstadoUsuario);
+
+router.post('/actualizarPersona', correspondenciaController.actualizarPersona);
+router.post('/actualizarUsuarios', correspondenciaController.actualizarUsuarios);
+router.post('/aceptarDerivacionHistorial', correspondenciaController.aceptarDerivacionHistorial);
+
 
 module.exports = router;

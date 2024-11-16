@@ -25,6 +25,8 @@ const Correspondencia = {
     } catch (error) {
       console.error("Error al ejecutar la consulta:", error);
     }
+    console.log("Indice generado:", indice);
+    
     try {
         let sql = `INSERT INTO hoja_de_ruta
        (
@@ -36,7 +38,7 @@ const Correspondencia = {
              tipoDocumento,
              categoria,
              estado,
-             usu_cre,agregarPersona
+             usu_cre,
              id_personas
              )
             VALUES
@@ -384,6 +386,7 @@ sabeDoc:  async (data) => {
     return result;
   },
   rechazarDerivacion: async (data) => {
+    console.log("222222222222222");
     console.log(data);
     
     const sql=`
@@ -513,6 +516,52 @@ sabeDoc:  async (data) => {
     });
     return result;
    },
+   async aceptarDerivacionHistorial(data){
+    const sql = `INSERT INTO historial_derivaciones
+            (
+             id_personas, 
+             id_hoja_de_ruta,
+             fecha_respuesta,
+             id_documento_save,
+             fec_cre,
+             estado,
+             id_proveido_personas
+             )
+            VALUES(
+             ${data.id_personas},
+             ${data.id_hoja_de_ruta},
+             current_timestamp(),
+             ${data.id_documento_save},
+             current_timestamp(),
+             '${data.estado}',
+             ${data.id_proveido_personas}
+             );`;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result['insertId'];
+   },
+  //  async rechazarDerivacion(data){
+  //   const sql = `INSERT INTO historial_derivaciones
+  //           (id_personas, id_hoja_de_ruta, fecha_derivacion, obs, fec_cre, plazo_dias,  proveido,estado,id_proveido_personas, id_documento_save )
+  //           VALUES(${data.id_personas}, ${data.id_hoja_de_ruta}, current_timestamp(), '${data.observacion}', current_timestamp(), ${data.plazo_dias}, '${data.proveido}', '${data.estado}', ${data.id_proveido_personas}, ${data.id_documento_save});`;
+  //   const result = await new Promise((resolve, reject) => {
+  //     db.query(sql, (err, result) => {
+  //       if (err) {
+  //         console.log(err);
+  //         return reject(err);
+  //       }
+  //       resolve(result);
+  //     });
+  //   });
+  //   return result['insertId'];
+  //  },
    async obtenerHistorialDeDerivaciones(data){
     const sql = `
     SELECT 
@@ -681,6 +730,90 @@ agregarUsuarios: async (params) => {
   }
 },
 
+
+actualizarPersona:async (params) => {
+  console.log(params);
+  
+  try {
+    const sql = `
+    UPDATE personas 
+    SET 
+      nombres = '${params.nombres}',
+      apellidos = '${params.apellidos}',
+      roles = '${params.roles}',
+      ci = '${params.ci}',
+      edad = ${params.edad},
+      celular = ${params.celular},
+      usu_mod = '${params.usu_mod}',
+      id_roles = ${params.id_roles},
+      id_cargos = ${params.id_cargos},
+      id_unidad = ${params.id_unidad}
+    WHERE id_personas = ${params.id_personas};
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+actualizarUsuarios:async (params) => {
+  try {
+    const sql = `
+    UPDATE usuarios 
+    SET 
+      usuario = '${params.usuario}',
+      password = '${params.password}',
+      fec_mod = current_timestamp(),
+      usu_mod = '${params.usu_mod}'
+    WHERE id_personas = ${params.id_personas};
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+
+  } catch (error) {
+    console.log(error);
+  }
+},
+obternerCodigoInterno : async (params) => {
+  try {
+    const sql = `
+    select codigo_interno 
+    from hoja_de_ruta 
+    where id_hoja_de_ruta = ${params.id_hoja_de_ruta};
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result[0].codigo_interno;
+  } catch (error) {
+    console.log(error);
+  }
+},
+
 consultarPersonas: async () => {
   try {
     const sql = `select 
@@ -689,6 +822,29 @@ consultarPersonas: async () => {
                   from usuarios u  
                   inner join personas p 
                   on p.id_personas = u.id_personas ;
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+actualizarEstadoUsuario : async (params) => {
+  
+  try {
+    const sql = `
+    UPDATE usuarios
+    SET estado = '${params.estado?1:0}'
+    WHERE id_personas = ${params.id_personas};
     `;
     const result = await new Promise((resolve, reject) => {
       db.query(sql, (err, result) => {
