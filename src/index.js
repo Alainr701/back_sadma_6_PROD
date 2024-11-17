@@ -2,11 +2,13 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const connection = require('./models/db');
+const { PORT } = require('./config.js');
+
 
 const app = express();
 
 //settings
-app.set('port', process.env.PORT || 3000);
+// app.set('port', process.env.PORT || 3000);
 // app.set('json spaces', 2);
 
 app.use(morgan('dev'));
@@ -18,8 +20,9 @@ app.use(cors());
 
 //routes
 app.use('/', require('./routes/index'));
+console.log(PORT);
 
 //starting the server
-app.listen(app.get('port'), () => {
-  console.log(`Server running on port ${app.get('port')}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
