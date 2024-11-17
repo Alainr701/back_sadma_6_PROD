@@ -172,6 +172,8 @@ obtenerTodo: async (body) => {
   }
 },
 obtenerUnaCorrespondencia: async (data) => {
+  console.log(data);
+  
   try {
     const sql = `SELECT 
     p.*,hr.*,c.nombre,u.nombre as unidad
@@ -845,6 +847,37 @@ actualizarEstadoUsuario : async (params) => {
     UPDATE usuarios
     SET estado = '${params.estado?1:0}'
     WHERE id_personas = ${params.id_personas};
+    `;
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+},
+reporte : async (params) => {
+  try {
+    const sql = `
+    SELECT 
+      CONCAT(p.nombres, ' ', p.apellidos) AS nombre_completo,
+      hr.codigo_interno,
+      hr.estado,
+      hd.fec_cre,
+      hd.obs,
+      hr.cite
+    FROM historial_derivaciones hd 
+    INNER JOIN hoja_de_ruta hr ON hd.id_hoja_de_ruta = hr.id_hoja_de_ruta
+    INNER JOIN personas p ON p.id_personas = hr.id_personas
+    WHERE DATE(hd.fec_cre) >= '${params.fecha_inicio}' 
+      AND DATE(hd.fec_cre) <= '${params.fecha_fin}'
+      AND hd.id_personas = ${params.id_personas};
     `;
     const result = await new Promise((resolve, reject) => {
       db.query(sql, (err, result) => {

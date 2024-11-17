@@ -86,6 +86,6 @@ router.post('/actualizarEstadoUsuario', correspondenciaController.actualizarEsta
 router.post('/actualizarPersona', correspondenciaController.actualizarPersona);
 router.post('/actualizarUsuarios', correspondenciaController.actualizarUsuarios);
 router.post('/aceptarDerivacionHistorial', correspondenciaController.aceptarDerivacionHistorial);
-
+router.post('/reporte', correspondenciaController.generarReporte);
 
 module.exports = router;

@@ -462,6 +462,20 @@ const correspondenciaController = {
             res.status(500).json({ message: 'Error al actualizar el usuario', error: err });
         }
     },
+    generarReporte: async (req, res) => {
+        try {
+            const body  = req.body;
+            const data = await Correspondencia.reporte(body);
+            res.json(
+                {
+                    status: true,
+                    data,
+                    message: 'Reporte consultado correctamente',
+                });
+        } catch (err) {
+            res.status(500).json({ message: 'Error al consultar reporte', error: err });
+        }
+    },
     
 }
 

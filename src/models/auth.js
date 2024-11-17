@@ -6,7 +6,7 @@ const User = {
     from usuarios u
     inner join personas p 
     on u.id_personas = p.id_personas 
-    where u.usuario = ? and u.password = ?`;
+    where u.usuario = ? and u.password = ? and u.estado = true;`;
     db.query(query,[user,password] ,(err, results) => {
       if (err) {
         return callback(err, null);
